@@ -5,8 +5,8 @@ Package.describe({
 Package.on_use(function (api) {
     api.use(['templating'], 'client');
     
-    // Load stripe.js in the <head>
-    api.add_files('stripe.html', 'client');
+    // Load stripe.js in the <head> and provide Handlebars helpers
+    api.add_files(['stripe.html', 'stripe_helpers.js'], 'client');
     
     // StripeConfig
     api.add_files('stripe_config.js', ['client', 'server'])

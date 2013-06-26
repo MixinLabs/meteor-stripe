@@ -1,3 +1,18 @@
 <head>
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 </head>
+
+<template name="_stripeCheckout">
+    {{#constant}}
+    <form action="" method="POST">
+      <script
+        src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
+        data-key="{{apiKey}}"
+        data-amount="{{amount}}"
+        data-name="{{name}}"
+        data-description="{{description}}"
+        data-image="{{image}}">
+      </script>
+    </form>
+    {{/constant}}
+</template>
