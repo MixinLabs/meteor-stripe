@@ -7,4 +7,7 @@ Package.on_use(function (api) {
     
     // Load stripe.js in the <head>
     api.add_files('stripe.html', 'client');
+    
+    // StripeConfig
+    api.add_files('stripe_config.js', ['client', 'server'])
 });
