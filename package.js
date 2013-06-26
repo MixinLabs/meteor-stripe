@@ -3,7 +3,7 @@ Package.describe({
 });
 
 Package.on_use(function (api) {
-    api.use(['templating'], 'client');
+    api.use(['underscore', 'jquery', 'templating'], 'client');
     
     // Load stripe.js in the <head> and provide Handlebars helpers
     api.add_files(['stripe.html', 'stripe_helpers.js'], 'client');

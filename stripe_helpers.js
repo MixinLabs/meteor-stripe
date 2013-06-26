@@ -1,10 +1,17 @@
-/**** Well this is a very ugly, embarrassing hack :-( ****/
+/**
+    Well this is a very-very ugly, embarrassing hack! :-(
+    But otherwise, I couldn't get Meteor to handle the <script> tag properly
+**/
 Template._stripeCheckout.rendered = function () {
     var self = this,
         data = self.data,
         form = self.find('form'),
         script = document.createElement('script'),
         $script = $(script);
+    
+    if (!data.key && StripeConfig.key) {
+        data.key = StripeConfig.key;
+    }
     
     _.each(data, function (val, key) {
         data['data-'+key] = val;
