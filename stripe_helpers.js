@@ -11,7 +11,6 @@ Template._stripeCheckout.rendered = function () {
         delete data[key];
     });
     
-    $(self.find('script')).remove();
     $script.attr('src', 'https://checkout.stripe.com/v2/checkout.js');
     $script.addClass('stripe-button');
     $script.attr(data);
