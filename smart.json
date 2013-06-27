@@ -4,5 +4,8 @@
     "homepage": "https://github.com/MixinLabs/meteor-stripe",
     "author": "MixinLabs",
     "version": "0.1.0",
-    "git": "https://github.com/MixinLabs/meteor-stripe.git"
+    "git": "https://github.com/MixinLabs/meteor-stripe.git",
+    "packages": {
+        "router": "0.5.1"
+    }
 }

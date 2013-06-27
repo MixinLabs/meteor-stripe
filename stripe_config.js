@@ -1,5 +1,5 @@
 // Client / Server configuration object
-StripeConfig = {};
+StripeConfig = { livemode: false };
 
 StripeConfig.setAPIKey = function (key) {
     this.key = key;
@@ -8,4 +8,12 @@ StripeConfig.setAPIKey = function (key) {
         Stripe.setPublishableKey(key);
     }
     
+}
+
+StripeConfig.enableLiveMode = function () {
+    this.livemode = true;
+}
+
+StripeConfig.disableLiveMode = function () {
+    this.livemode = false;
 }

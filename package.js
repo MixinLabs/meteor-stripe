@@ -3,11 +3,21 @@ Package.describe({
 });
 
 Package.on_use(function (api) {
-    api.use(['underscore', 'jquery', 'templating'], 'client');
+    // Common
+    api.use(['underscore'], ['client', 'server']);
+    
+    // Client
+    api.use(['jquery', 'templating'], 'client');
+    
+    // Server
+    api.use(['http'], 'server');
     
     // Load stripe.js in the <head> and provide Handlebars helpers
     api.add_files(['stripe.html', 'stripe_helpers.js'], 'client');
     
     // StripeConfig
     api.add_files('stripe_config.js', ['client', 'server'])
+    
+    // Stripe server-side interface
+    api.add_files('stripe.js', 'server');
 });
