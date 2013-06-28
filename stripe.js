@@ -39,8 +39,8 @@ Stripe.Charge = {
 };
 
 // Charge API::create
-Stripe.Charge.create = function (options) {
-    return Stripe._call('POST', this.url, options);
+Stripe.Charge.create = function (params) {
+    return Stripe._call('POST', this.url, params);
 };
 
 // Charge API::retrieve
@@ -48,19 +48,21 @@ Stripe.Charge.retrieve = function (chargeId) {
     var url = this.url + '/' + chargeId,
         result = Stripe._call('GET', url);
     
-    Object.defineProperty(result, 'refund', {
-        configurable: false,
-        enumerable: false,
-        writable: false,
-        value: _.bind(Stripe.Charge.refund, Stripe.Charge, chargeId)
-    });
+    if (!result.error) {
+        Object.defineProperty(result, 'refund', {
+            configurable: false,
+            enumerable: false,
+            writable: false,
+            value: _.bind(Stripe.Charge.refund, Stripe.Charge, chargeId)
+        });
     
-    Object.defineProperty(result, 'capture', {
-        configurable: false,
-        enumerable: false,
-        writable: false,
-        value: _.bind(Stripe.Charge.capture, Stripe.Charge, chargeId)
-    });
+        Object.defineProperty(result, 'capture', {
+            configurable: false,
+            enumerable: false,
+            writable: false,
+            value: _.bind(Stripe.Charge.capture, Stripe.Charge, chargeId)
+        });
+    }
     
     return result;
 };
@@ -113,3 +115,55 @@ Stripe.Charge.all = function (count, created) {
     
     return Stripe._call('GET', this.url, params);
 }
+
+
+
+// Customer API
+Stripe.Customer = {
+    url: Stripe.url + 'customers'
+}
+
+// Customer API::create
+Stripe.Customer.create = function (params) {
+    return Stripe._call('POST', this.url, params);
+};
+
+
+// Customer API::retrieve
+Stripe.Customer.retrieve = function (customerId) {
+    var url = this.url + '/' + customerId,
+        result = Stripe._call('GET', url);
+    
+    if (!result.error) {
+        result.update = {};
+    
+        Object.defineProperty(result.update, 'save', {
+            value: _.bind(Stripe.Customer.update, Stripe.Customer, customerId, result.update)
+        });
+        
+        Object.defineProperty(result, 'delete', {
+            value: _.bind(Stripe.Customer.delete, Stripe.Customer, customerId)
+        });
+    }
+    
+    return result;
+};
+
+// Customer API::update
+Stripe.Customer.update = function (customerId, params) {
+    var url = this.url + '/' + customerId;
+    
+    return Stripe._call('POST', url, params);
+};
+
+// Customer API::delete
+Stripe.Customer.delete = function (customerId) {
+    var url = this.url + '/' + customerId;
+    
+    return Stripe._call('DELETE', url);
+};
+
+// Customer API::all
+Stripe.Customer.all = function () {
+    return Stripe._call('GET', this.url);
+};
