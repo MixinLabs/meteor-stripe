@@ -53,6 +53,10 @@ Stripe.Charge.retrieve = function (chargeId) {
         Object.defineProperty(result, 'capture', {
             value: _.bind(Stripe.Charge.capture, Stripe.Charge, chargeId)
         });
+        
+        Object.defineProperty(result, 'updatDispute', {
+            value: _.bind(Stripe.Dispute.update, Stripe.Charge, chargeId)
+        });
     }
     
     return result;
@@ -400,4 +404,15 @@ Stripe.InvoiceItems.delete = function (invoiceItemId) {
     var url = this.url + '/' + invoiceItemId;
     
     return Stripe._call('DELETE', url);
+};
+
+
+// Dispute API
+Stripe.Dispute = {};
+
+// Dispute API::update
+Stripe.Dispute.update = function (chargeId, params) {
+    var url = Stripe.Charge.url + '/' + chargeId + '/dispute';
+    
+    return Stripe._call('POST', url, params);
 };
