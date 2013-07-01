@@ -416,3 +416,40 @@ Stripe.Dispute.update = function (chargeId, params) {
     
     return Stripe._call('POST', url, params);
 };
+
+
+// Transfer API
+Stripe.Transfer = {
+    url: Stripe.url + 'transfers'
+};
+
+// Transfer API::create
+Stripe.Transfer.create = function (params) {
+    return Stripe._call('POST', this.url, params);
+};
+
+// Transfer API::retrieve
+Stripe.Transfer.retrieve = function (transferId) {
+    var url = this.url + '/' + transferId,
+        result = Stripe._call('GET', url);
+        
+    if (!result.error) {
+        Object.defineProperty(result, 'cancel', {
+            value: _.bind(Stripe.Transfer.cancel, Stripe.Transfer, transferId)
+        });
+    }
+    
+    return result;
+};
+
+// Transfer API::cancel
+Stripe.Transfer.cancel = function (transferId) {
+    var url = this.url + '/' + transferId + '/cancel';
+    
+    return Stripe._call('POST', url)
+};
+
+// Transfer API::all
+Stripe.Transfer.all = function (params) {
+    return Stripe._call('GET', this.url, params);
+};
