@@ -559,3 +559,22 @@ Stripe.Event.retrieve = function (eventId) {
 Stripe.Event.all = function (params) {
     return Stripe._call('GET', this.url, params);
 };
+
+
+
+// Token API
+Stripe.Token = {
+    url: Stripe.url + 'tokens'
+};
+
+// Token API::create
+Stripe.Token.create = function (params) {
+    return Stripe._call('POST', this.url, params);
+};
+
+// Token API::retrieve
+Stripe.Token.retrieve = function (tokenId) {
+    var url = this.url + '/' + tokenId;
+    
+    return Stripe._call('GET', url);
+};
