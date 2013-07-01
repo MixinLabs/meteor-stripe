@@ -540,3 +540,22 @@ Stripe.Balance.history = function (params) {
     
     return Stripe._call('GET', url, params);
 };
+
+
+
+// Event API
+Stripe.Event = {
+    url: Stripe.url + 'events'
+};
+
+// Event API::retrieve
+Stripe.Event.retrieve = function (eventId) {
+    var url = this.url + '/' + eventId;
+    
+    return Stripe._call('GET', url);
+};
+
+// Event API::all
+Stripe.Event.all = function (params) {
+    return Stripe._call('GET', this.url, params);
+};
