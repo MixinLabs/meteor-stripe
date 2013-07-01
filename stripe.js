@@ -512,6 +512,31 @@ Stripe.Account = {
 
 // Account API::retrieve
 Stripe.Account.retrieve = function () {
-    console.log(this.url);
     return Stripe._call('GET', this.url);
+};
+
+
+// Balance API
+Stripe.Balance = {
+    url: Stripe.url + 'balance'
+};
+
+// Balance API::retrieve
+Stripe.Balance.retrieve = function () {
+    var result = Stripe._call('GET', this.url);
+    
+    if (!result.error) {
+        Object.defineProperty(result, 'history', {
+            value: _.bind(Stripe.Balance.history, Stripe.Balance)
+        });
+    }
+    
+    return result;
+};
+
+// Balance API::history
+Stripe.Balance.history = function (params) {
+    var url = this.url + '/' + 'history';
+    
+    return Stripe._call('GET', url, params);
 };
