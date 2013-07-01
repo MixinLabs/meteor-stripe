@@ -453,3 +453,54 @@ Stripe.Transfer.cancel = function (transferId) {
 Stripe.Transfer.all = function (params) {
     return Stripe._call('GET', this.url, params);
 };
+
+
+
+// Recipient API
+Stripe.Recipient = {
+    url: Stripe.url + 'recipients'
+};
+
+// Recipient API::create
+Stripe.Recipient.create = function (params) {
+    return Stripe._call('POST', this.url, params);
+};
+
+// Recipient API::retrieve
+Stripe.Recipient.retrieve = function (recipientId) {
+    var url = this.url + '/' + recipientId,
+        result = Stripe._call('GET', url);
+        
+    if (!result.error) {
+        result.update = {};
+        
+        Object.defineProperty(result.update, 'save', {
+            value: _.bind(Stripe.Recipient.update, Stripe.Recipient, recipientId, result.update)
+        });
+        
+        Object.defineProperty(result, 'delete', {
+            value: _.bind(Stripe.Recipient.delete, Stripe.Recipient, recipientId)
+        });
+    }
+    
+    return result;
+};
+
+// Recipient API::update
+Stripe.Recipient.update = function (recipientId, params) {
+    var url = this.url + '/' + recipientId;
+    
+    return Stripe._call('POST', url, params);
+};
+
+// Recipient API::delete
+Stripe.Recipient.delete = function (recipientId) {
+    var url = this.url + '/' + recipientId;
+    
+    return Stripe._call('DELETE', url)
+};
+
+// Recipient API::all
+Stripe.Recipient.all = function (params) {
+    return Stripe._call('GET', this.url, params);
+};
