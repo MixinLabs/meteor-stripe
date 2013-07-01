@@ -504,3 +504,14 @@ Stripe.Recipient.delete = function (recipientId) {
 Stripe.Recipient.all = function (params) {
     return Stripe._call('GET', this.url, params);
 };
+
+// Account API
+Stripe.Account = {
+    url: Stripe.url + 'account'
+};
+
+// Account API::retrieve
+Stripe.Account.retrieve = function () {
+    console.log(this.url);
+    return Stripe._call('GET', this.url);
+};
