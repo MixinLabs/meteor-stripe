@@ -7,20 +7,44 @@ Stripe.setAPIKey = function (key) {
     this.api_key = key;
 };
 
+Object.defineProperty(Stripe, '_expand', {
+    value: function (params) {
+        params = _.clone(params);
+        
+        Object.keys(params).forEach(function (key) {
+            var obj = params[key];
+            
+            if (_.isObject(obj)) {
+                delete params[key];
+                
+                Object.keys(obj).forEach(function (k) {
+                    var expandedKey = key + '[' + k + ']';
+                    params[expandedKey] = obj[k];
+                });
+            }
+        });
+        
+        
+        return params;
+    }
+});
+
 // Make HTTP POST request
 Object.defineProperty(Stripe, '_call', {
     value: function (method, url, hash) {
-        var result = {};
+        var result = {},
+            key, value, prop, temp;
     
         Stripe.api_key = Stripe.api_key || StripeConfig.key;
         if (!Stripe.api_key) {
             throw "API Key is not provided."
         }
         
+        
         try {
             result = Meteor.http.call(method, url, {
                 auth: Stripe.api_key + ':',
-                params: hash
+                params: Stripe._expand(hash)
             });
         } catch (e) {
             result = e.response;
