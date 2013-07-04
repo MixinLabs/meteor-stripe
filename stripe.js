@@ -40,7 +40,6 @@ Object.defineProperty(Stripe, '_call', {
             throw "API Key is not provided."
         }
         
-        
         try {
             result = Meteor.http.call(method, url, {
                 auth: Stripe.api_key + ':',

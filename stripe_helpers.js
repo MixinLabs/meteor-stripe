@@ -7,13 +7,18 @@ Template._stripeCheckout.rendered = function () {
         data = self.data,
         form = self.find('form'),
         script = document.createElement('script'),
-        $script = $(script);
+        $script = $(script),
+        $tempEl;
     
     if (!data.key && StripeConfig.key) {
         data.key = StripeConfig.key;
     }
     
     _.each(data, function (val, key) {
+        if (key !== 'key') {
+            $tempEl = $('<input type=hidden />').val(val).attr('name', key);
+            form.appendChild($tempEl[0]);
+        }
         data['data-'+key] = val;
         delete data[key];
     });

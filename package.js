@@ -10,7 +10,7 @@ Package.on_use(function (api) {
     api.use(['jquery', 'templating'], 'client');
     
     // Server
-    api.use(['http'], 'server');
+    api.use(['http', 'router'], 'server');
     
     // Load stripe.js in the <head> and provide Handlebars helpers
     api.add_files(['stripe.html', 'stripe_helpers.js'], 'client');
@@ -20,4 +20,7 @@ Package.on_use(function (api) {
     
     // Stripe server-side interface
     api.add_files('stripe.js', 'server');
+    
+    // Stripe checkout
+    api.add_files('stripe_checkout.js', 'server');
 });
